@@ -1,4 +1,6 @@
-from pomodoroPlan.models.user import User
+from pomodoroPlan.models.task import Task
+
+from django.core import serializers
 
 
 def inc(x):
@@ -10,7 +12,7 @@ def test_answer():
 
 
 def test_create_user():
-    u = User(name="joe", age=69)
-    assert u.age == 69
-    assert u.name != "jane"
-    assert u.name == "joe"
+    t = Task(description="get the dishes")
+    x = serializers.serialize("json",[t])
+    print(x)
+    assert 1 == 2

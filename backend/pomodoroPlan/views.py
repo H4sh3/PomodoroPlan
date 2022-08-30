@@ -1,8 +1,14 @@
 from django.http import HttpResponse
-import datetime
 
-def example_view(request,year):
+from pomodoroPlan.models.task import Task
+
+def task_list(request):
+
+    task_list = ''
+
+    for t in Task.objects.all():
+        task_list+= f'<div>{t.description}</div>'
     
-    html = "<html><body>Argument is: %s.</body></html>" % year
+    html = f"<html><body>{task_list}</body></html>"
 
     return HttpResponse(html)
