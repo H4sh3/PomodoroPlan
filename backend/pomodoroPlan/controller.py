@@ -1,9 +1,10 @@
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.core import serializers
 from django.contrib.auth import authenticate,login
 
 import json
+
+from pomodoroPlan.models.task import Task
 
 ok_resp = {
     "status":"ok"
@@ -14,13 +15,31 @@ err_resp = {
 }
 
 
+
+description_key = "description"
+
+def get_task_list(req):
+    if not req.user.is_authenticated:
+        return JsonResponse(err_resp)
+    
+    return JsonResponse({"tasks":[{description_key:t.description} for t in Task.objects.filter(user=req.user)]})
+
 def add_pomodoro_task(req):
 
     if not req.user.is_authenticated:
         return JsonResponse(err_resp)
     
-    for task in serializers.deserialize("json", req.body):
-        task.save()
+    data = json.loads(req.body)
+
+    if not description_key in data:
+        return JsonResponse(err_resp)
+
+    description = data[description_key]
+
+    if len(description) == 0:
+        return JsonResponse(err_resp)
+
+    req.user.task_set.create(description=description)
 
     return JsonResponse(ok_resp)
 
@@ -62,5 +81,4 @@ def login_route(req):
         return JsonResponse(err_resp)
 
 def login_check(req):
-    print(req.user.username)
     return JsonResponse({"auth":req.user.is_authenticated})

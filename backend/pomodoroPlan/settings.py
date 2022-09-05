@@ -4,6 +4,7 @@ USE_TZ = False
 SECRET_KEY="yolo"
 
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ MIDDLEWARE=[
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": f'{BASE_DIR}/templates',
+        "DIRS": os.path.join(BASE_DIR, 'templates'),
         "APP_DIRS": True,
         "OPTIONS":{
             "context_processors":[
@@ -43,7 +44,7 @@ ROOT_URLCONF="pomodoroPlan.urls"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': f'{BASE_DIR}/database.sqlite',
+        'NAME': os.path.join(BASE_DIR, 'database.sqlite'),
     }
 }
 
