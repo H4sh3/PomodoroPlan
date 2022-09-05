@@ -12,4 +12,5 @@ urlpatterns = [
     path('tasks', views.task_list),
     path('new_task', controller.add_pomodoro_task),
     path('admin/', admin.site.urls),
+    path('register', controller.register),
 ]
