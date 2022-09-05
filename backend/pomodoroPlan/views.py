@@ -6,9 +6,14 @@ def task_list(request):
 
     task_list = ''
 
+    i = 0
     for t in Task.objects.all():
-        task_list+= f'<div>{t.description}</div>'
+        i+=1
+        task_list+= f'<div>{i}: {t.description}</div>'
     
     html = f"<html><body>{task_list}</body></html>"
+
+    if len(task_list) == 0:
+        html="<html><body>You have 0 tasks</body></html>"
 
     return HttpResponse(html)
