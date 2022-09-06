@@ -1,3 +1,4 @@
+import { logout, StatusResponse } from "~/api/auth"
 import { useMainStore } from "../store"
 
 const NavbarElements: React.FC = () => {
@@ -25,9 +26,11 @@ const NavbarElements: React.FC = () => {
                         <li className="">
                             <button
                                 onClick={() => {
-                                    console.log("clicked")
-                                    document.cookie = ''
-                                    location.reload();
+                                    logout().then((res: StatusResponse) => {
+                                        if (res.status === "success") {
+                                            location.reload();
+                                        }
+                                    })
                                 }}
                                 className="font-bold hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
                             >

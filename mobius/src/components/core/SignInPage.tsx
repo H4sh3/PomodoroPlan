@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { getLoginStatus, sendSignUp } from "~/api/auth"
+import { getLoginStatus, sendSignIn, sendSignUp } from "~/api/auth"
 
 
 
@@ -18,12 +18,12 @@ const SignInPage = () => {
             "email": email,
             "password": pw1
         }
-        sendSignUp(payload)
+        sendSignIn(payload)
             .then((res) => {
-                console.log(res)
-            })
-            .finally(() => {
                 setLoading(false)
+                if (res.status === "success") {
+                    window.location.href = '/'
+                }
             })
     }
 
@@ -59,19 +59,6 @@ const SignInPage = () => {
                     type="submit"
                     className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
                     Sign in
-                </button>
-
-                <button
-                    disabled={loading}
-                    onClick={() => {
-                        getLoginStatus().then(r => {
-                            console.log(r)
-                            setAuthStatus(r.status)
-                        })
-                    }}
-                    type="submit"
-                    className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
-                    check
                 </button>
                 {authStatus}
             </div>

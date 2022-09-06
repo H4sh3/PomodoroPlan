@@ -13,4 +13,5 @@ urlpatterns = [
     path('signup', controller.sign_up),
     path('signin', controller.sign_in),
     path('login_check', controller.login_check),
+    path('logout', controller.logout_route),
 ]

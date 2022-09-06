@@ -19,11 +19,10 @@ const SignUpPage = () => {
         }
         sendSignUp(payload)
             .then((res) => {
-                console.log(res)
-            })
-            .finally(() => {
                 setLoading(false)
-                location.href = '/'
+                if (res.status === "success") {
+                    window.location.href = '/'
+                }
             })
     }
 
@@ -72,18 +71,6 @@ const SignUpPage = () => {
                     type="submit"
                     className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
                     Create Account
-                </button>
-
-                <button
-                    disabled={loading}
-                    onClick={() => {
-                        getLoginStatus().then(r => {
-                            console.log(r)
-                        })
-                    }}
-                    type="submit"
-                    className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
-                    check
                 </button>
             </div>
 

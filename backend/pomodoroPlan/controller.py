@@ -1,13 +1,13 @@
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 
 import json
 
 from pomodoroPlan.models.task import Task
 
-ok_resp = {
-    "status":"ok"
+success_resp = {
+    "status":"success"
 }
 
 err_resp = {
@@ -41,7 +41,7 @@ def add_pomodoro_task(req):
 
     req.user.task_set.create(description=description)
 
-    return JsonResponse(ok_resp)
+    return JsonResponse(success_resp)
 
 
 def valid_auth_data(body):
@@ -70,7 +70,7 @@ def sign_up(req):
         except Exception as e:
             print(f'exception {e}')
             return JsonResponse({"status":e})
-        return JsonResponse(ok_resp)
+        return JsonResponse(success_resp)
 
 
 def sign_in(req):
@@ -81,9 +81,13 @@ def sign_in(req):
     user = authenticate(username=email, password=password)
     if user is not None:
         login(req,user)
-        return JsonResponse(ok_resp)
+        return JsonResponse(success_resp)
     else:
         return JsonResponse(err_resp)
 
 def login_check(req):
     return JsonResponse({"status":'authenticated' if req.user.is_authenticated else 'unauthenticated'})
+
+def logout_route(req):
+    logout(req)
+    return JsonResponse(success_resp)
