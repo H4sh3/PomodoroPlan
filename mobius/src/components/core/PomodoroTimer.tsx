@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 
 const PomodoroTimer: React.FC = () => {
+
     const [secondsPassed, setSecondsPassed] = useState(0)
 
     const [startSeconds, setStartSeconds] = useState(600)

@@ -23,6 +23,7 @@ const SignUpPage = () => {
             })
             .finally(() => {
                 setLoading(false)
+                location.href = '/'
             })
     }
 

@@ -24,6 +24,8 @@
     "subfont": "^6.9.0"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "immer": "^9.0.15",
+    "zustand": "^4.1.1"
   }
 }
