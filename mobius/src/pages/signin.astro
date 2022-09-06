@@ -1,0 +1,17 @@
+---
+import Layout from "~/layouts/PageLayout.astro";
+import SignInPage from "~/components/core/SignInPage";
+
+import { SITE } from "~/config.mjs";
+
+const title = `${SITE.name} — Your website with Astro + Tailwind CSS`;
+const description =
+    "🚀 AstroWind is a free and Ready to Start template to make your website using Astro and Tailwind CSS.";
+const canonical = new URL("", Astro.site);
+---
+
+<Layout meta={{ title, description, canonical }}>
+    <main>
+        <SignInPage client:load />
+    </main>
+</Layout>
