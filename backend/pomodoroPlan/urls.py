@@ -10,7 +10,7 @@ urlpatterns = [
     path('create_task', controller.add_pomodoro_task),
     path('task_list', controller.get_task_list),
     path('admin/', admin.site.urls),
-    path('register', controller.register),
-    path('login', controller.login_route),
-    path('check', controller.login_check),
+    path('signup', controller.sign_up),
+    path('signin', controller.sign_in),
+    path('login_check', controller.login_check),
 ]

@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 
@@ -57,18 +57,23 @@ def valid_auth_data(body):
 
     return True,email,password
 
-def register(req):
-    valid,email,password = valid_auth_data(req.body)
-    if not valid:
-        return JsonResponse(err_resp)
+def sign_up(req):
+    if req.method == 'POST':
+        valid,email,password = valid_auth_data(req.body)
+        if not valid:
+            return JsonResponse(err_resp)
 
-    user = User.objects.create_user(email,email,password)
-    user.save()
+        try:
+            user = User.objects.create_user(email,email,password)
+            user.save()
+            login(req,user)
+        except Exception as e:
+            print(f'exception {e}')
+            return JsonResponse({"status":e})
+        return JsonResponse(ok_resp)
 
-    return JsonResponse(ok_resp)
 
-
-def login_route(req):
+def sign_in(req):
     valid,email,password = valid_auth_data(req.body)
     if not valid:
         return JsonResponse(err_resp)
@@ -81,4 +86,4 @@ def login_route(req):
         return JsonResponse(err_resp)
 
 def login_check(req):
-    return JsonResponse({"auth":req.user.is_authenticated})
+    return JsonResponse({"status":'authenticated' if req.user.is_authenticated else 'unauthenticated'})
