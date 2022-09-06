@@ -2,30 +2,38 @@
 import { Icon } from "astro-icon";
 import Logo from "~/components/widgets/Logo.astro";
 
-const { } = Astro.props;
+const {} = Astro.props;
 ---
 
 <header
-  class="sticky top-0 z-40 flex-none mx-auto w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-b dark:border-b-0">
-  <div class="py-3 px-3 mx-auto w-full md:flex md:justify-between max-w-6xl md:px-4">
-    <div class="flex justify-between">
+  class="sticky top-0 z-40 flex-none mx-auto w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-b dark:border-b-0"
+>
+  <div
+    class="py-3 px-3 mx-auto w-full md:flex md:justify-between max-w-6xl md:px-4 dark:border-b-2 dark:border-white"
+  >
+    <div class="flex justify-between w-full">
       <a class="flex items-center" href="/">
         <Logo />
       </a>
-      <div class="flex items-center md:hidden">
-        <button type="button"
+      <div class="flex items-center">
+        <button
+          type="button"
           class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
-          aria-label="Toggle between Dark and Light mode" data-aw-toggle-color-scheme>
+          aria-label="Toggle between Dark and Light mode"
+          data-aw-toggle-color-scheme
+        >
           <Icon name="tabler:sun" class="w-6 h-6" />
         </button>
         <button
           class="ml-1.5 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center transition"
-          aria-label="Toggle Menu" data-aw-toggle-menu>
+          aria-label="Toggle Menu"
+          data-aw-toggle-menu
+        >
           <Icon name="tabler:menu" class="w-6 h-6" />
         </button>
       </div>
     </div>
-    <nav class="items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200"
+    <!--     <nav class="items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200"
       aria-label="Main navigation" id="menu">
       <ul
         class="flex flex-col pt-8 md:pt-0 md:flex-row md:self-center collapse w-full md:w-auto collapsed text-xl md:text-base">
@@ -69,7 +77,7 @@ const { } = Astro.props;
           </a>
         </div>
       </div>
-    </nav>
+    </nav> -->
   </div>
 </header>
 

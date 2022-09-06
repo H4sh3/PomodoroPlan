@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 
 
-const POMODURATIONS = [6, 10 * 60, 20 * 60, 25 * 60, 30 * 60]
+const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 
 const PomodoroTimer: React.FC = () => {
     const [secondsPassed, setSecondsPassed] = useState(0)
@@ -12,6 +12,7 @@ const PomodoroTimer: React.FC = () => {
     const [running, setRunning] = useState(false)
 
     const changeStartSeconds = (t: number) => {
+        setRunning(false)
         setSecondsPassed(0)
         setStartSeconds(t)
     }
@@ -34,7 +35,7 @@ const PomodoroTimer: React.FC = () => {
     }
 
     return <div className="flex flex-col justify-center items-center p-4 gap-4">
-        <div className="underline">
+        <div className="text-2xl">
             Start a pomodoro!
         </div>
         <div className="flex flex-row gap-4">
@@ -53,9 +54,9 @@ const PomodoroTimer: React.FC = () => {
             {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
         </div>
 
-        <button className={`p-4 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 bg-red-200' : 'border-green-500 bg-green-200'}`} onClick={() => setRunning(!running)}>
+        <button className={`p-4 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 text-red-500' : 'border-green-500 light:bg-green-200'}`} onClick={() => setRunning(!running)}>
             {
-                running ? 'Stop timer!' : 'Start timer!'
+                running ? 'Stop!' : 'Start!'
             }
         </button>
     </div >
