@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon";
 import Logo from "~/components/widgets/Logo.astro";
 import NavbarElements from "~/components/core/NavbarElements";
+import ToggleTheme from "~/components/core/ToggleTheme.astro";
 
 const {} = Astro.props;
 ---
@@ -34,7 +35,10 @@ const {} = Astro.props;
         </button>
       </div>
     </div>
-    <NavbarElements client:load />
+    <div class="flex flex-row gap-2">
+      <NavbarElements client:load />
+      <ToggleTheme />
+    </div>
   </div>
 </header>
 
