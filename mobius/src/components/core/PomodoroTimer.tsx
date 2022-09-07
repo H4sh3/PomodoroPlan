@@ -84,7 +84,14 @@ export default function PomodoroTimer() {
         }
         <div className="text-4xl font-bold py-8 flex flex-col items-center">
             <div className="flex flex-row gap-2 items-center">
-                {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
+                <div className="flex flex-col gap-1 justify-center items-center">
+                    {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
+                    {
+                        !running && <div className="text-gray-400 text-xs">
+                            {`Break ${breakTimeString(breakSeconds)} `}
+                        </div>
+                    }
+                </div>
                 {
                     !showSettings && !running && <button onClick={() => setShowSettings(!showSettings)} className="scale-50 border border-gray-100 rounded-xl">
                         <div className="p-2">
@@ -93,11 +100,6 @@ export default function PomodoroTimer() {
                     </button>
                 }
             </div>
-            {
-                !running && <div className="text-gray-400 text-xs">
-                    {`Break ${breakTimeString(breakSeconds)} `}
-                </div>
-            }
         </div>
 
 
