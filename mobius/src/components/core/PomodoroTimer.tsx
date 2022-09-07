@@ -26,7 +26,7 @@ export default function PomodoroTimer() {
 
     const [running, setRunning] = useState(false)
 
-    const [showSettings, setShowSettings] = useState(true)
+    const [showSettings, setShowSettings] = useState(false)
 
 
     const [breakActive, setBreakActive] = useState(false)
@@ -83,7 +83,16 @@ export default function PomodoroTimer() {
             </div>
         }
         <div className="text-4xl font-bold py-8 flex flex-col items-center">
-            {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
+            <div className="flex flex-row gap-2 items-center">
+                {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
+                {
+                    !showSettings && !running && <button onClick={() => setShowSettings(!showSettings)} className="scale-50 border border-gray-100 rounded-xl">
+                        <div className="p-2">
+                            🔧
+                        </div>
+                    </button>
+                }
+            </div>
             {
                 !running && <div className="text-gray-400 text-xs">
                     {`Break ${breakTimeString(breakSeconds)} `}
@@ -97,50 +106,50 @@ export default function PomodoroTimer() {
                 running ? 'Stop!' : 'Start!'
             }
         </button>
-        <div className={`${showSettings ? 'p-2 border-2 border-gray-600' : ''} flex flex-col items-center gap-2 pt-4`}>
-            <button onClick={() => setShowSettings(!showSettings)} className="flex flex-row justify-end xl:hover:bg-green-400 cursor-pointer select-none p-2 border-2 border-green-500 rounded-xl">
-                🔧
-            </button>
-            {
-                showSettings && <div className="flex flex-col gap-2">
-                    <div className="flex flex-col gap-2 p-2">
-                        <div className="flex flex-col gap-1 items-center">
-                            <div className="underline">
-                                Pomodoro Duration
-                            </div>
-                            <div className="flex flex-row gap-2 p-2">
-                                {
-                                    POMODURATIONS.map((t, i) => {
-                                        return <div key={i} className={`${t === pomodoSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
-                                            onClick={() => changeStartSeconds(t)}
-                                        >
-                                            {t / 60} min
-                                        </div>
-                                    })
-                                }
-                            </div>
+        {
+            showSettings && <div className="flex flex-col gap-2 p-2 border-2 border-gray-600 justify-center items-center">
+                <div className="w-full flex flex-row justify-end">
+                    <button onClick={() => setShowSettings(!showSettings)} className="cursor-pointer select-none p-2 border-2 rounded-xl">
+                        X
+                    </button>
+                </div>
+                <div className="flex flex-col gap-2 p-2">
+                    <div className="flex flex-col gap-1 items-center">
+                        <div className="underline">
+                            Pomodoro Duration
                         </div>
-                    </div>
-                    <div className="flex flex-col gap-2 p-2">
-                        <div className="flex flex-col gap-1 items-center">
-                            <div className="underline">
-                                Break Duration
-                            </div>
-                            <div className="flex flex-row gap-2 p-2">
-                                {
-                                    BREAKDURATIONS.map((t, i) => {
-                                        return <div key={i} className={`${t === breakSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
-                                            onClick={() => changeBreakDuration(t)}
-                                        >
-                                            {t / 60} min
-                                        </div>
-                                    })
-                                }
-                            </div>
+                        <div className="flex flex-row gap-2 p-2">
+                            {
+                                POMODURATIONS.map((t, i) => {
+                                    return <div key={i} className={`${t === pomodoSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
+                                        onClick={() => changeStartSeconds(t)}
+                                    >
+                                        {t / 60} min
+                                    </div>
+                                })
+                            }
                         </div>
                     </div>
                 </div>
-            }
-        </div>
+                <div className="flex flex-col gap-2 p-2">
+                    <div className="flex flex-col gap-1 items-center">
+                        <div className="underline">
+                            Break Duration
+                        </div>
+                        <div className="flex flex-row gap-2 p-2">
+                            {
+                                BREAKDURATIONS.map((t, i) => {
+                                    return <div key={i} className={`${t === breakSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
+                                        onClick={() => changeBreakDuration(t)}
+                                    >
+                                        {t / 60} min
+                                    </div>
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 }
