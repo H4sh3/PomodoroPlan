@@ -26,3 +26,18 @@ export async function getLoginStatus(): Promise<StatusResponse> {
 export async function logout(): Promise<StatusResponse> {
     return (await axios.get<StatusResponse>(`${BACKEND_URL}/logout`, { withCredentials: true })).data
 }
+
+
+
+const key = "authStatus"
+export const authenticated = "authenticated"
+export const unauthenticated = "unauthenticated"
+
+const isServer = typeof window === "undefined"
+
+const authStatus = !isServer ? (window.sessionStorage.getItem(key) ? window.sessionStorage.getItem(key) : unauthenticated) : authenticated
+
+export const isLoggedIn = () => authStatus === authenticated
+
+export const authUser = () => window.sessionStorage.setItem(key, authenticated)
+export const unauthUser = () => window.sessionStorage.setItem(key, unauthenticated)

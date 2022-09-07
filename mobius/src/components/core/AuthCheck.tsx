@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { getLoginStatus, StatusResponse } from "~/api/auth";
-import { useMainStore } from "../store";
+import { authUser, getLoginStatus, StatusResponse, unauthUser } from "~/api/auth";
 
-const AuthCheck = () => {
-    const { setAuthStatus, authStatus } = useMainStore()
+export default function AuthCheck() {
     useEffect(() => {
-        if (authStatus.length === 0) {
+        if (!window.sessionStorage.getItem("authStatus")) {
             getLoginStatus().then((res: StatusResponse) => {
-                setAuthStatus(res.status)
+                if (res.status === "authenticated") {
+                    authUser()
+                } else {
+                    unauthUser()
+                }
             }).catch(() => {
                 console.error("backend down")
             })
@@ -16,5 +18,3 @@ const AuthCheck = () => {
 
     return <></>
 }
-
-export default AuthCheck

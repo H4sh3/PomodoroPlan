@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { getLoginStatus, sendSignUp } from "~/api/auth"
+import { authUser, sendSignUp } from "~/api/auth"
 
-const SignUpPage = () => {
+export default function SignUpPage() {
 
     const [email, setEmail] = useState('jane@doe.com')
     const [pw1, setPw1] = useState('test')
@@ -21,6 +21,7 @@ const SignUpPage = () => {
             .then((res) => {
                 setLoading(false)
                 if (res.status === "success") {
+                    authUser()
                     window.location.href = '/'
                 }
             })
@@ -83,5 +84,3 @@ const SignUpPage = () => {
         </div>
     </div >
 }
-
-export default SignUpPage

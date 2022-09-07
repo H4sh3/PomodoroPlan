@@ -1,9 +1,13 @@
-import { logout, StatusResponse } from "~/api/auth"
-import { useMainStore } from "../store"
+import { useEffect, useState } from "react"
+import { isLoggedIn, logout, StatusResponse, unauthUser } from "~/api/auth"
 
-const NavbarElements: React.FC = () => {
+export default function NavbarElements() {
 
-    const { isLoggedIn } = useMainStore()
+    const [l, setL] = useState(false)
+
+    useEffect(() => {
+        setL(isLoggedIn())
+    }, [isLoggedIn()])
 
     return <nav
         className="items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200"
@@ -21,23 +25,22 @@ const NavbarElements: React.FC = () => {
                 </a>
             </li>
             {
-                isLoggedIn() ?
-                    <>
-                        <li className="">
-                            <button
-                                onClick={() => {
-                                    logout().then((res: StatusResponse) => {
-                                        if (res.status === "success") {
-                                            location.reload();
-                                        }
-                                    })
-                                }}
-                                className="font-bold hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                            >
-                                Log out
-                            </button>
-                        </li>
-                    </>
+                l ?
+                    <li className="">
+                        <button
+                            onClick={() => {
+                                logout().then((res: StatusResponse) => {
+                                    if (res.status === "success") {
+                                        unauthUser()
+                                        location.reload();
+                                    }
+                                })
+                            }}
+                            className="font-bold hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                        >
+                            Log out
+                        </button>
+                    </li>
                     :
                     <>
                         <li>
@@ -59,5 +62,3 @@ const NavbarElements: React.FC = () => {
         </ul>
     </nav>
 }
-
-export default NavbarElements

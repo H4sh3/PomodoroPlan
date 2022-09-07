@@ -1,16 +1,12 @@
 import { useState } from "react"
-import { getLoginStatus, sendSignIn, sendSignUp } from "~/api/auth"
+import { authUser, getLoginStatus, sendSignIn, sendSignUp } from "~/api/auth"
 
-
-
-const SignInPage = () => {
+export default function SignInPage() {
 
     const [email, setEmail] = useState('jane@doe.com')
     const [pw1, setPw1] = useState('test')
 
     const [loading, setLoading] = useState(false)
-
-    const [authStatus, setAuthStatus] = useState('')
 
     const submitForm = () => {
         setLoading(true)
@@ -22,6 +18,7 @@ const SignInPage = () => {
             .then((res) => {
                 setLoading(false)
                 if (res.status === "success") {
+                    authUser()
                     window.location.href = '/'
                 }
             })
@@ -60,7 +57,6 @@ const SignInPage = () => {
                     className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
                     Sign in
                 </button>
-                {authStatus}
             </div>
 
             <div className="text-grey-dark mt-6">
@@ -72,5 +68,3 @@ const SignInPage = () => {
         </div>
     </div >
 }
-
-export default SignInPage
