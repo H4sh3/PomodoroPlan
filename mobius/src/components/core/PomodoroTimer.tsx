@@ -5,6 +5,12 @@ import useSound from 'use-sound';
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 const BREAKDURATIONS = [2 * 60, 5 * 60, 10 * 60, 15 * 60]
 
+const breakTimeString = (seconds: number) => {
+    const m = Math.floor(seconds / 60)
+    const s = seconds - m * 60
+    return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`
+}
+
 export default function PomodoroTimer() {
 
 
@@ -119,11 +125,17 @@ export default function PomodoroTimer() {
                 Time to take a break...
             </div>
         }
-        <div className="text-4xl font-bold py-8">
+        <div className="text-4xl font-bold py-8 flex flex-col items-center">
             {`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
+            {
+                !running && <div className="text-gray-400 text-xs">
+                    {`Break ${breakTimeString(breakSeconds)} `}
+                </div>
+            }
         </div>
 
-        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'}`} onClick={() => setRunning(!running)}>
+
+        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={() => setRunning(!running)}>
             {
                 running ? 'Stop!' : 'Start!'
             }
