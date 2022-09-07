@@ -14,9 +14,9 @@ const breakTimeString = (seconds: number) => {
 export default function PomodoroTimer() {
 
 
-    const [playBreakEnd] = useSound('/public/break.wav', { volume: 0.5 });
+    const [playBreakEnd] = useSound('/sounds/break.wav', { volume: 0.5 });
 
-    const [playPomodoroEnd] = useSound('/public/pomodoro.wav', { volume: 0.5 });
+    const [playPomodoroEnd] = useSound('/sounds/pomodoro.wav', { volume: 0.5 });
 
     const [secondsPassed, setSecondsPassed] = useState(0)
     const [pomodoSeconds, setPomodoSeconds] = useState(POMODURATIONS[2])
@@ -77,49 +77,6 @@ export default function PomodoroTimer() {
     }
 
     return <div className="flex flex-col items-center justify-center gap-4 light:bg-orange-500 pt-4">
-        <div onClick={() => setShowSettings(!showSettings)} className="flex flex-row justify-end hover:bg-green-400 cursor-pointer select-none p-2 border-2 border-green-500 rounded-xl">
-            Settings
-        </div>
-        {
-            showSettings && <div className="border-2 border-gray-200 flex flex-col gap-2">
-                <div className="flex flex-col gap-2 p-2">
-                    <div className="flex flex-col gap-1 items-center">
-                        <div className="underline">
-                            Pomodoro Duration
-                        </div>
-                        <div className="flex flex-row gap-2 p-2">
-                            {
-                                POMODURATIONS.map((t, i) => {
-                                    return <div key={i} className={`${t === pomodoSeconds ? 'border-green-500 border-4' : 'border-gray-200 border-2'} rounded-lg p-2 cursor-pointer select-none`}
-                                        onClick={() => changeStartSeconds(t)}
-                                    >
-                                        {t / 60} minutes
-                                    </div>
-                                })
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col gap-2 p-2">
-                    <div className="flex flex-col gap-1 items-center">
-                        <div className="underline">
-                            Break Duration
-                        </div>
-                        <div className="flex flex-row gap-2 p-2">
-                            {
-                                BREAKDURATIONS.map((t, i) => {
-                                    return <div key={i} className={`${t === breakSeconds ? 'border-green-500 border-4' : 'border-gray-200 border-2'} rounded-lg p-2 cursor-pointer select-none`}
-                                        onClick={() => changeBreakDuration(t)}
-                                    >
-                                        {t / 60} minutes
-                                    </div>
-                                })
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
         {
             breakActive && <div className="text-green-500">
                 Time to take a break...
@@ -140,5 +97,50 @@ export default function PomodoroTimer() {
                 running ? 'Stop!' : 'Start!'
             }
         </button>
+        <div className={`${showSettings ? 'p-2 border-2 border-gray-600' : ''} flex flex-col items-center gap-2 pt-4`}>
+            <button onClick={() => setShowSettings(!showSettings)} className="flex flex-row justify-end xl:hover:bg-green-400 cursor-pointer select-none p-2 border-2 border-green-500 rounded-xl">
+                🔧
+            </button>
+            {
+                showSettings && <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 p-2">
+                        <div className="flex flex-col gap-1 items-center">
+                            <div className="underline">
+                                Pomodoro Duration
+                            </div>
+                            <div className="flex flex-row gap-2 p-2">
+                                {
+                                    POMODURATIONS.map((t, i) => {
+                                        return <div key={i} className={`${t === pomodoSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
+                                            onClick={() => changeStartSeconds(t)}
+                                        >
+                                            {t / 60} min
+                                        </div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-2 p-2">
+                        <div className="flex flex-col gap-1 items-center">
+                            <div className="underline">
+                                Break Duration
+                            </div>
+                            <div className="flex flex-row gap-2 p-2">
+                                {
+                                    BREAKDURATIONS.map((t, i) => {
+                                        return <div key={i} className={`${t === breakSeconds ? 'border-green-500 border-2' : 'border-gray-500 border-2'} rounded-lg p-2 cursor-pointer select-none`}
+                                            onClick={() => changeBreakDuration(t)}
+                                        >
+                                            {t / 60} min
+                                        </div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 }
