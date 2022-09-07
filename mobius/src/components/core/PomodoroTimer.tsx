@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import useSound from 'use-sound';
 
+import useSound from 'use-sound';
 
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 const BREAKDURATIONS = [2 * 60, 5 * 60, 10 * 60, 15 * 60]
@@ -15,7 +15,6 @@ export default function PomodoroTimer() {
 
 
     const [playBreakEnd] = useSound('/sounds/break.wav', { volume: 0.5 });
-
     const [playPomodoroEnd] = useSound('/sounds/pomodoro.wav', { volume: 0.5 });
 
     const [secondsPassed, setSecondsPassed] = useState(0)

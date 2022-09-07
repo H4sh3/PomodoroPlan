@@ -1,6 +1,6 @@
 {
-  "name": "@onwidget/astrowind",
-  "description": "A template to make your website using Astro + Tailwind CSS.",
+  "name": "pomodoro_log",
+  "description": "Simple app to manage notes and pomodoro sessions",
   "version": "0.1.6",
   "private": true,
   "scripts": {
