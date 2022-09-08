@@ -14,7 +14,8 @@ err_resp = {
     "status":"err"
 }
 
-
+def serialize_task(t):
+    return {description_key:t.description,"uuid":str(t.uuid),"finished":t.finished}
 
 description_key = "description"
 
@@ -22,7 +23,7 @@ def get_task_list(req):
     if not req.user.is_authenticated:
         return JsonResponse(err_resp)
     
-    return JsonResponse({"tasks":[{description_key:t.description} for t in Task.objects.filter(user=req.user)]})
+    return JsonResponse({"tasks":[serialize_task(t) for t in Task.objects.filter(user=req.user)]})
 
 def add_pomodoro_task(req):
 
@@ -39,9 +40,11 @@ def add_pomodoro_task(req):
     if len(description) == 0:
         return JsonResponse(err_resp)
 
-    req.user.task_set.create(description=description)
+    t = req.user.task_set.create(description=description)
+    t_s = serialize_task(t)
+    print(t_s)
 
-    return JsonResponse(success_resp)
+    return JsonResponse({"status":"success","tasks":[t_s]})
 
 
 def valid_auth_data(body):
@@ -91,3 +94,24 @@ def login_check(req):
 def logout_route(req):
     logout(req)
     return JsonResponse(success_resp)
+
+def update_task(req,uuid):
+    if not req.user.is_authenticated:
+        return JsonResponse(err_resp)
+
+    data = json.loads(req.body)
+    
+    if "delete" in data["options"]:
+        req.user.task_set.filter(uuid=uuid).delete()
+        # no save here?
+        return JsonResponse(success_resp)
+
+    if "finished" in data["options"]:
+        t = req.user.task_set.filter(uuid=uuid).first()
+        if t:
+            t.finished = not t.finished
+            t.save()
+            return JsonResponse(success_resp)
+
+    # unknown option
+    return JsonResponse(err_resp)

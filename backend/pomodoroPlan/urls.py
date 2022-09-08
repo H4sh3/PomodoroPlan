@@ -9,6 +9,7 @@ from . import controller
 urlpatterns = [
     path('create_task', controller.add_pomodoro_task),
     path('task_list', controller.get_task_list),
+    path('task/<uuid>/update', controller.update_task),
     path('admin/', admin.site.urls),
     path('signup', controller.sign_up),
     path('signin', controller.sign_in),

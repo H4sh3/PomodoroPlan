@@ -1,12 +1,13 @@
 import os
 from pathlib import Path
-DEBUG = True
+
 USE_TZ = False
+DEBUG = True
 
 # Important: change this in prod!
 SECRET_KEY = "321 123 321 123"
 CORS_ORIGIN_ALLOW_ALL = True
-
+# ALLOWED_HOSTS=["localhost"]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
