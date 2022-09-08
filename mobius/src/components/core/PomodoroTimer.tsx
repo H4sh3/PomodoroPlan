@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
 
 import useSound from 'use-sound';
-import { isServer, updateTask } from "~/api/calls";
-import { useMainStore } from "./mainStore";
-import { emptyTask, selectedTask } from "./nanostore";
-import TaskManagerComponent from "./TaskList";
+import { isServer, Task, updateTask } from "~/api/calls";
+
+
+export const emptyTask: Task = {
+    description: '',
+    finished: false,
+    uuid: ''
+}
 
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 const BREAKDURATIONS = [2 * 60, 5 * 60, 10 * 60, 15 * 60]
