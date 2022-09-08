@@ -19,14 +19,14 @@ const CreateTaskComponent: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
         <div>
             New task
         </div>
-        <input
-            type="text"
+        <textarea
             className="block border border-grey-light w-full p-3 rounded mb-4"
+            rows={3}
             name="email"
             placeholder="task"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-        />
+        ></textarea>
         <div className="flex flex-row justify-center">
             <button onClick={submit}
                 disabled={loading}
@@ -44,7 +44,6 @@ interface UsesTasksProps {
 }
 
 const TaskList: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
-
     const [deleteSure, setDeleteSure] = useState(false)
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [loading, setLoading] = useState(false)
@@ -88,6 +87,12 @@ const TaskList: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
         })
     }
 
+
+    const startPomodoro = (t: Task) => {
+        window.localStorage.setItem("task", JSON.stringify(t))
+        window.location.href = "/"
+    }
+
     const isSelectedTaskForDelete = (i: number) => i == selectedIndex
 
     return <div className="grid grid-cols-4 gap-4 pt-12">
@@ -125,6 +130,9 @@ const TaskList: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
                                 </>
                         }
                     </button>
+                    <div className="col-span-4 text-gray-300 text-center text-xs pb-2 cursor-pointer select-none" onClick={() => startPomodoro(t)}>
+                        Start a pomodoro!
+                    </div>
                     <div className="col-span-4 border-b border-gray-300"></div>
                 </React.Fragment>
             })

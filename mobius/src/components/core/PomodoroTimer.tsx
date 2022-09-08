@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 
 import useSound from 'use-sound';
+import { isServer, updateTask } from "~/api/calls";
+import { useMainStore } from "./mainStore";
+import { emptyTask, selectedTask } from "./nanostore";
 import TaskManagerComponent from "./TaskList";
 
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
@@ -13,8 +16,6 @@ const breakTimeString = (seconds: number) => {
 }
 
 export default function PomodoroTimer() {
-
-
     const [playBreakEnd] = useSound('/sounds/break.wav', { volume: 0.5 });
     const [playPomodoroEnd] = useSound('/sounds/pomodoro.wav', { volume: 0.5 });
 
@@ -27,7 +28,6 @@ export default function PomodoroTimer() {
     const [running, setRunning] = useState(false)
 
     const [showSettings, setShowSettings] = useState(false)
-
 
     const [breakActive, setBreakActive] = useState(false)
 
@@ -76,10 +76,46 @@ export default function PomodoroTimer() {
         setSecondsPassed(0)
     }
 
+    const [task, setTask] = useState(emptyTask)
+
+    useEffect(() => {
+        const taskString: string = !isServer ? localStorage.getItem("task") : ''
+        if (taskString && taskString.length > 0) {
+            setTask(JSON.parse(taskString))
+        }
+    }, [])
+
     return <div className="flex flex-col items-center justify-center gap-4 light:bg-orange-500 pt-4">
         {
             breakActive && <div className="text-green-500">
                 Time to take a break...
+            </div>
+        }
+        {
+            task.description.length >= 0 && <div className="p-2 xl:w-1/2 text-center flex flex-col gap-2 items-center">
+                <div className="text-2xl underline">
+                    Active Task
+                </div>
+                <div>
+                    {task.description}
+                </div>
+                {
+                    !task.finished && <button onClick={() => {
+                        updateTask(task.uuid, ["finished"]).then(() => {
+                            setTask(
+                                {
+                                    description: task.description,
+                                    finished: !task.finished,
+                                    uuid: task.uuid
+                                }
+                            )
+                        })
+                    }}
+                        className="p-2 border-2 cursor-pointer rounded-xl border-green-500 light:bg-green-200"
+                    >
+                        Finished
+                    </button>
+                }
             </div>
         }
         <div className="text-4xl font-bold py-8 flex flex-col items-center">
@@ -148,7 +184,7 @@ export default function PomodoroTimer() {
         }
         <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={() => setRunning(!running)}>
             {
-                running ? 'Stop!' : 'Start!'
+                running ? 'Stop' : 'Start'
             }
         </button>
     </div>

@@ -36,7 +36,7 @@ const key = "authStatus"
 export const authenticated = "authenticated"
 export const unauthenticated = "unauthenticated"
 
-const isServer = typeof window === "undefined"
+export const isServer = typeof window === "undefined"
 
 const authStatus = !isServer ? (window.sessionStorage.getItem(key) ? window.sessionStorage.getItem(key) : unauthenticated) : authenticated
 
