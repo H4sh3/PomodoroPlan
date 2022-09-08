@@ -77,7 +77,6 @@ export default function PomodoroTimer() {
     }
 
     return <div className="flex flex-col items-center justify-center gap-4 light:bg-orange-500 pt-4">
-        <TaskManagerComponent />
         {
             breakActive && <div className="text-green-500">
                 Time to take a break...
@@ -102,13 +101,6 @@ export default function PomodoroTimer() {
                 }
             </div>
         </div>
-
-
-        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={() => setRunning(!running)}>
-            {
-                running ? 'Stop!' : 'Start!'
-            }
-        </button>
         {
             showSettings && <div className="flex flex-col gap-2 p-2 border-2 border-gray-600 justify-center items-center">
                 <div className="w-full flex flex-row justify-end">
@@ -154,5 +146,10 @@ export default function PomodoroTimer() {
                 </div>
             </div>
         }
+        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={() => setRunning(!running)}>
+            {
+                running ? 'Stop!' : 'Start!'
+            }
+        </button>
     </div>
 }

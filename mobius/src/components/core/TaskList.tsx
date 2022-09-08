@@ -91,26 +91,26 @@ const TaskList: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
     const isSelectedTaskForDelete = (i: number) => i == selectedIndex
 
     return <div className="grid grid-cols-4 gap-4 pt-12">
-        <div className="col-span-4 text-center">
+        <div className="col-span-4 text-center text-2xl">
             Todo List
         </div>
         {
             tasks.map((t, i) => {
                 return <React.Fragment key={i}>
-                    <div className="col-span-2">
-                        {t.description}
-                    </div>
                     <div className="flex flex-row justfify-around">
                         <button onClick={() => finishedTask(t.uuid)}>
                             {
                                 t.finished ? <>
-                                    todo
+                                    ✅
                                 </> :
                                     <>
-                                        done
+                                        ⃝
                                     </>
                             }
                         </button>
+                    </div>
+                    <div className="col-span-2">
+                        {t.description}
                     </div>
                     <button
                         onClick={() => deleteTask(t.uuid, i)}
@@ -118,13 +118,14 @@ const TaskList: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
                     >
                         {
                             deleteSure && isSelectedTaskForDelete(i) ? <>
-                                Sure?
+                                Delete?
                             </>
                                 : <>
                                     🗑
                                 </>
                         }
                     </button>
+                    <div className="col-span-4 border-b border-gray-300"></div>
                 </React.Fragment>
             })
         }
@@ -142,9 +143,9 @@ export default function TaskManagerComponent() {
     }, [])
 
     return <div className="flex flex-row justify-center">
-        <div className="flex flex-col gap-4 md:w-1/2 p-4">
-            <CreateTaskComponent tasks={tasks} setTasks={setTasks} />
+        <div className="flex flex-col gap-4 xl:w-1/2 p-4">
             <TaskList tasks={tasks} setTasks={setTasks} />
+            <CreateTaskComponent tasks={tasks} setTasks={setTasks} />
         </div>
     </div>
 }
