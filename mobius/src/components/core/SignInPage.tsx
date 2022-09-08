@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { authUser, getLoginStatus, sendSignIn, sendSignUp } from "~/api/auth"
+import { authUser, sendSignIn } from "~/api/calls"
 
 export default function SignInPage() {
 
@@ -54,7 +54,7 @@ export default function SignInPage() {
                     disabled={loading}
                     onClick={submitForm}
                     type="submit"
-                    className="w-full text-center py-3 rounded bg-green hover:bg-green-dark focus:outline-none my-1 border-gray-500 border-2">
+                    className="w-full text-center py-3 rounded focus:outline-none my-1 border-gray-500 border-2">
                     Sign in
                 </button>
             </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import useSound from 'use-sound';
+import TaskManagerComponent from "./TaskList";
 
 const POMODURATIONS = [10 * 60, 20 * 60, 25 * 60, 30 * 60]
 const BREAKDURATIONS = [2 * 60, 5 * 60, 10 * 60, 15 * 60]
@@ -76,6 +77,7 @@ export default function PomodoroTimer() {
     }
 
     return <div className="flex flex-col items-center justify-center gap-4 light:bg-orange-500 pt-4">
+        <TaskManagerComponent />
         {
             breakActive && <div className="text-green-500">
                 Time to take a break...

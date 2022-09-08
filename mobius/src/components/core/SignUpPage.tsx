@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { authUser, sendSignUp } from "~/api/auth"
+import { authUser, sendSignUp } from "~/api/calls"
 
 export default function SignUpPage() {
 

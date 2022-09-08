@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { authUser, getLoginStatus, StatusResponse, unauthUser } from "~/api/auth";
+import { authUser, getLoginStatus, StatusResponse, unauthUser } from "~/api/calls";
 
 export default function AuthCheck() {
     useEffect(() => {
