@@ -96,7 +96,7 @@ export default function PomodoroTimer() {
             </div>
         }
         {
-            task.description.length >= 0 && <div className="p-2 xl:w-1/2 text-center flex flex-col gap-2 items-center">
+            task.description.length > 0 && <div className="p-2 xl:w-1/2 text-center flex flex-col gap-2 items-center">
                 <div className="text-2xl underline">
                     Active Task
                 </div>
@@ -104,15 +104,11 @@ export default function PomodoroTimer() {
                     {task.description}
                 </div>
                 {
-                    !task.finished && <button onClick={() => {
+                    <button onClick={() => {
                         updateTask(task.uuid, ["finished"]).then(() => {
-                            setTask(
-                                {
-                                    description: task.description,
-                                    finished: !task.finished,
-                                    uuid: task.uuid
-                                }
-                            )
+                            // clear current task
+                            setTask(emptyTask)
+                            window.localStorage.removeItem("task")
                         })
                     }}
                         className="p-2 border-2 cursor-pointer rounded-xl border-green-500 light:bg-green-200"
@@ -132,14 +128,14 @@ export default function PomodoroTimer() {
                         </div>
                     }
                 </div>
-                {
-                    !showSettings && !running && <button onClick={() => setShowSettings(!showSettings)} className="scale-50 border border-gray-100 rounded-xl">
-                        <div className="p-2">
-                            🔧
-                        </div>
-                    </button>
-                }
             </div>
+            {
+                !showSettings && !running && <button onClick={() => setShowSettings(!showSettings)} className="scale-50 border border-gray-100 rounded-xl">
+                    <div className="p-2">
+                        🔧
+                    </div>
+                </button>
+            }
         </div>
         {
             showSettings && <div className="flex flex-col gap-2 p-2 border-2 border-gray-600 justify-center items-center">

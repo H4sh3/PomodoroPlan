@@ -41,7 +41,7 @@ export default function NavbarElements() {
                                     logout().then((res: StatusResponse) => {
                                         if (res.status === "success") {
                                             unauthUser()
-                                            location.reload();
+                                            window.location.href = "/"
                                         }
                                     })
                                 }}

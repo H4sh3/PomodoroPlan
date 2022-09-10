@@ -6,13 +6,15 @@ const CreateTaskComponent: React.FC<UsesTasksProps> = ({ tasks, setTasks }) => {
     const [loading, setLoading] = useState(false)
 
     const submit = () => {
-        console.log("yo")
         setLoading(true)
         createNewTask(description).then(res => {
             if (res.status === STATUS.SUCCESS) {
                 setTasks([...tasks, res.tasks[0]])
             }
-        }).finally(() => setLoading(false))
+        }).finally(() => {
+            setLoading(false)
+            setDescription("")
+        })
     }
 
     return <div className="flex flex-col justify-center items-center gap-2">
