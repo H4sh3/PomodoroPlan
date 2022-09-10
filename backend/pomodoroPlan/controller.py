@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.db import IntegrityError
 
 import json
 
@@ -70,23 +71,28 @@ def sign_up(req):
             user = User.objects.create_user(email,email,password)
             user.save()
             login(req,user)
+        except IntegrityError:
+            return JsonResponse({"status":"This email is used already "})
         except Exception as e:
-            print(f'exception {e}')
-            return JsonResponse({"status":e})
+            return JsonResponse(err_resp)
         return JsonResponse(success_resp)
 
 
 def sign_in(req):
     valid,email,password = valid_auth_data(req.body)
     if not valid:
-        return JsonResponse(err_resp)
+        return JsonResponse({
+            "status":"email or password don't match"
+        })
 
     user = authenticate(username=email, password=password)
-    if user is not None:
+    if user:
         login(req,user)
         return JsonResponse(success_resp)
-    else:
-        return JsonResponse(err_resp)
+    
+    return JsonResponse({
+            "status":"email or password don't match"
+        })
 
 def login_check(req):
     return JsonResponse({"status":'authenticated' if req.user.is_authenticated else 'unauthenticated'})
