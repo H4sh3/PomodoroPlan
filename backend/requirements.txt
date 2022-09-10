@@ -1,13 +1,6 @@
 asgiref==3.5.2
-attrs==22.1.0
 backports.zoneinfo==0.2.1
--e git+https://github.com/django/django.git@e9fd2b572410b1236da0d3d0933014138d89f44e#egg=Django
-iniconfig==1.1.1
-packaging==21.3
-pluggy==1.0.0
-py==1.11.0
-pyparsing==3.0.9
-pytest==7.1.2
-pytest-django==4.5.2
+Django==4.1.1
+django-cors-headers==3.13.0
+django-environ==0.9.0
 sqlparse==0.4.2
-tomli==2.0.1
