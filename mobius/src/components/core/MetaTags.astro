@@ -1,5 +1,6 @@
 ---
 import { getImage } from "@astrojs/image";
+import { META } from "~/config.mjs";
 import { getRelativeUrlByFilePath } from "~/utils/getRelativeUrlByFilePath";
 
 const { src: defaultImage } = await getImage({
@@ -8,12 +9,7 @@ const { src: defaultImage } = await getImage({
   height: 628,
 });
 
-const {
-  title = "AstroWind",
-  description = "",
-  image: _image = defaultImage,
-  canonical,
-} = Astro.props;
+const { image: _image = defaultImage } = Astro.props;
 
 const image =
   typeof _image === "string"
@@ -27,27 +23,27 @@ const image =
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-<title>{title}</title>
-<meta name="description" content={description} />
-{canonical && <link rel="canonical" href={canonical} />}
+<title>{META.title}</title>
+<meta name="description" content={META.description} />
+{META.canonical && <link rel="canonical" href={META.canonical} />}
 
 <!-- Google / Search Engine Tags -->
-<meta itemprop="name" content={title} />
-<meta itemprop="description" content={description} />
+<meta itemprop="name" content={META.title} />
+<meta itemprop="description" content={META.description} />
 {image && <meta itemprop="image" content={image} />}
 
 <!-- Facebook Meta Tags -->
-{canonical && <meta property="og:url" content={canonical} />}
+{META.canonical && <meta property="og:url" content={META.canonical} />}
 <meta property="og:type" content="website" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={META.title} />
+<meta property="og:description" content={META.description} />
 {image && <meta property="og:image" content={image} />}
 
 <!-- Twitter Meta Tags -->
-{canonical && <meta name="twitter:url" content={canonical} />}
+{META.canonical && <meta name="twitter:url" content={META.canonical} />}
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:title" content={META.title} />
+<meta name="twitter:description" content={META.description} />
 {image && <meta name="twitter:image" content={image} />}
 
 <!-- Fonts -->
