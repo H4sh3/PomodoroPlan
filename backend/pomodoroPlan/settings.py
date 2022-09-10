@@ -1,13 +1,26 @@
 import os
 from pathlib import Path
 
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+
 USE_TZ = False
-DEBUG = True
 
 # Important: change this in prod!
-SECRET_KEY = "321 123 321 123"
-CORS_ORIGIN_ALLOW_ALL = True
-# ALLOWED_HOSTS=["localhost"]
+SECRET_KEY = env("SECRET_KEY")
+CORS_ORIGIN_ALLOW_ALL = env("CORS")
+
+
+# dev
+# DEBUG = True
+
+# prod
+SESSION_COOKIE_SECURE = True
+DEBUG = env("DEBUG")
+ALLOWED_HOSTS=["localhost"]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
 ]
 
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -49,7 +63,7 @@ ROOT_URLCONF = "pomodoroPlan.urls"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database.sqlite'),
+        'NAME': env("DATABASE"),
     }
 }
 
