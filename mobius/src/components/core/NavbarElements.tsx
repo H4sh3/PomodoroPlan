@@ -32,7 +32,7 @@ export default function NavbarElements() {
                             <a
                                 className="font-medium hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
                                 href="/tasks"
-                            >Task List
+                            >Todo List
                             </a>
                         </li>
                         <li className="">
