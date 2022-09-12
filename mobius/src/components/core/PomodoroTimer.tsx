@@ -66,6 +66,9 @@ export default function PomodoroTimer() {
     if (running && minutes === 0 && seconds === 0) {
 
         if (breakActive) {
+            if (Notification.permission === "granted") {
+                new Notification("Break is over, get back to work!")
+            }
             setRunning(false)
             setBreakActive(false)
             // after break we set duration to selected pomoduration
@@ -73,7 +76,7 @@ export default function PomodoroTimer() {
         } else {
             // starting a break after pomodoro is done
             if (Notification.permission === "granted") {
-                const n = new Notification("Pomodoro finished, take a break!")
+                new Notification("Pomodoro finished, take a break!")
             }
             setTargetSeconds(breakSeconds)
             setBreakActive(true)
