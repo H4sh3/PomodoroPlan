@@ -72,6 +72,9 @@ export default function PomodoroTimer() {
             setTargetSeconds(pomodoSeconds)
         } else {
             // starting a break after pomodoro is done
+            if (Notification.permission === "granted") {
+                const n = new Notification("Pomodoro finished, take a break!")
+            }
             setTargetSeconds(breakSeconds)
             setBreakActive(true)
             playPomodoroEnd()
@@ -88,6 +91,15 @@ export default function PomodoroTimer() {
             setTask(JSON.parse(taskString))
         }
     }, [])
+
+    const startPomodoro = () => {
+        if (Notification.permission == "default") {
+            Notification.requestPermission()
+        }
+
+        setRunning(!running)
+
+    }
 
     return <div className="flex flex-col items-center justify-center gap-4 light:bg-orange-500 pt-4">
         {
@@ -182,7 +194,7 @@ export default function PomodoroTimer() {
                 </div>
             </div>
         }
-        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={() => setRunning(!running)}>
+        <button className={`p-2 border-2 cursor-pointer rounded-xl ${running ? 'border-red-500 light:bg-red-200 ' : 'border-green-500 light:bg-green-200'} `} onClick={startPomodoro}>
             {
                 running ? 'Stop' : 'Start'
             }
