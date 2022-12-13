@@ -6,21 +6,22 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
+import logging
+
 
 USE_TZ = False
 
 # Important: change this in prod!
 SECRET_KEY = env("SECRET_KEY")
-CORS_ORIGIN_ALLOW_ALL = env("CORS")
-
-
-# dev
-# DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = env("CORS") == "True"
 
 # prod
 SESSION_COOKIE_SECURE = True
-DEBUG = env("DEBUG")
-ALLOWED_HOSTS=["localhost"]
+DEBUG = env("DEBUG") == "True"
+gunicorn_logger = logging.getLogger('gunicorn.error')
+gunicorn_logger.warning(f'DEBUG: {DEBUG}')
+
+ALLOWED_HOSTS=["localhost","127.0.0.1"]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -74,7 +75,6 @@ STATIC_ROOT = "staticroot/"
 
 
 # django-cors-headers settings
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",

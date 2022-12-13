@@ -15,6 +15,9 @@ err_resp = {
     "status":"err"
 }
 
+def emptry_resp(_,ex):
+    return JsonResponse({})
+
 def serialize_task(t):
     return {description_key:t.description,"uuid":str(t.uuid),"finished":t.finished}
 

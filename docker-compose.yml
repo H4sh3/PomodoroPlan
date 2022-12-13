@@ -5,7 +5,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn wsgi:application -b 0.0.0.0:8000
+    environment:
+     - "DATABASE=/data/database.sqlite"
+     - "SECRET_KEY=665838f4-6af5-40ac-a3c4-480774ef8d51"
+     - "CORS=False"
+     - "DEBUG=False"
     ports:
       - "127.0.0.1:9050:8000"
     volumes:

@@ -6,6 +6,7 @@ from django.urls import path
 
 from . import controller
 
+
 urlpatterns = [
     path('create_task', controller.add_pomodoro_task),
     path('task_list', controller.get_task_list),
@@ -16,3 +17,6 @@ urlpatterns = [
     path('login_check', controller.login_check),
     path('logout', controller.logout_route),
 ]
+
+
+handler404 = 'pomodoroPlan.controller.emptry_resp'
