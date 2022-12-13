@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
@@ -15,8 +15,12 @@ err_resp = {
     "status":"err"
 }
 
-def emptry_resp(_,ex):
-    return JsonResponse({})
+err_msg = "nothing to see here"
+def empty_resp404(_, ex):
+    return HttpResponse(err_msg)
+
+def empty_resp500(_):
+    return HttpResponse(err_msg)
 
 def serialize_task(t):
     return {description_key:t.description,"uuid":str(t.uuid),"finished":t.finished}

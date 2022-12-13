@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 import environ
 
@@ -19,10 +20,11 @@ CORS_ORIGIN_ALLOW_ALL = env("CORS_ORIGIN_ALLOW_ALL") == "True"
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = []
 
-cors_origin_env = env("CORS_ALLOWED_ORIGIN")
-if cors_origin_env:
+try:
+    cors_origin_env = env("CORS_ALLOWED_ORIGIN")
     CORS_ALLOWED_ORIGINS = [cors_origin_env]
-else:
+except ImproperlyConfigured:
+    # not set in dev
     CORS_ALLOWED_ORIGINS+=["http://localhost:8000","http://127.0.0.1:8000"]
 
 # prod

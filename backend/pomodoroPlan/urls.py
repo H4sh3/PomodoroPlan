@@ -19,4 +19,5 @@ urlpatterns = [
 ]
 
 
-handler404 = 'pomodoroPlan.controller.emptry_resp'
+handler404 = 'pomodoroPlan.controller.empty_resp404'
+handler500 = 'pomodoroPlan.controller.empty_resp500'
