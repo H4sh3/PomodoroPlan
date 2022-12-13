@@ -11,9 +11,19 @@ import logging
 
 USE_TZ = False
 
-# Important: change this in prod!
 SECRET_KEY = env("SECRET_KEY")
-CORS_ORIGIN_ALLOW_ALL = env("CORS") == "True"
+CORS_ORIGIN_ALLOW_ALL = env("CORS_ORIGIN_ALLOW_ALL") == "True"
+
+
+# django-cors-headers settings
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = []
+
+cors_origin_env = env("CORS_ALLOWED_ORIGIN")
+if cors_origin_env:
+    CORS_ALLOWED_ORIGINS = [cors_origin_env]
+else:
+    CORS_ALLOWED_ORIGINS+=["http://localhost:8000","http://127.0.0.1:8000"]
 
 # prod
 SESSION_COOKIE_SECURE = True
@@ -72,11 +82,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = "static/"
 STATIC_ROOT = "staticroot/"
-
-
-# django-cors-headers settings
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]

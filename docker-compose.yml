@@ -8,9 +8,11 @@ services:
     command: gunicorn wsgi:application -b 0.0.0.0:8000
     environment:
      - "DATABASE=/data/database.sqlite"
-     - "SECRET_KEY=665838f4-6af5-40ac-a3c4-480774ef8d51"
-     - "CORS=False"
+     - "CORS_ORIGIN_ALLOW_ALL=False"
      - "DEBUG=False"
+     # Set secret_key and cors_allowed_origin to prod settings
+     - "SECRET_KEY=${SECRET_KEY}"
+     - "CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN}"
     ports:
       - "127.0.0.1:9050:8000"
     volumes:
